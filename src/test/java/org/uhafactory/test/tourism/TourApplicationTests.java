@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TourismApplicationTests {
+public class TourApplicationTests {
 	@Autowired
 	private ProgramRepository programRepository;
 
