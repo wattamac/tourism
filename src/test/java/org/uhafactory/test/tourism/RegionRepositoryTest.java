@@ -1,36 +1,46 @@
 package org.uhafactory.test.tourism;
 
+import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.uhafactory.test.DatabaseTestConfig;
+import org.uhafactory.test.RepositoryTestBase;
+import org.uhafactory.test.tourism.region.Region;
+import org.uhafactory.test.tourism.region.RegionRepository;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
-@Import(DatabaseTestConfig.class)
-@Transactional
-class RegionRepositoryTest {
+class RegionRepositoryTest extends RepositoryTestBase {
 
     @Autowired
-    private RegionRepository regionRepository;
+    private RegionRepository repository;
 
     @Test
-    void testParent() {
-        Region parent = Region.builder().code("1").name("2").build();
+    void testFindByNames() {
+        persist(Region.create("강원도 속초시"));
+        persist(Region.create("강원도 평창군"));
+        persist(Region.create("강원도 양평군"));
+        persist(Region.create("강원도"));
 
-        Region child = Region.builder().code("2").name("child").parent(parent).build();
-        regionRepository.save(child);
 
-        Region result = regionRepository.getOne(child.getCode());
-        assertThat(result.getCode()).isEqualTo(child.getCode());
+        List<Region> result = repository.findByNames(Lists.newArrayList("강원도", "평창군", "속초시"));
 
-        assertThat(result.getParent().getCode()).isEqualTo(parent.getCode());
+        assertThat(result.size()).isEqualTo(3);
+        assertThat(result.get(0).getName());
+    }
+
+    @Test
+    void testGetOneWithProgram() {
+        Region region = Region.create("강원도 속초시");
+        persist(region);
+        persist(Region.create("강원도 평창군"));
+
+        Region result = repository.getOneWithPrograms(region.getCode());
+        assertThat(result.getName().getName()).isEqualTo("속초시");
+    }
+
+    private void persist(Region region) {
+        repository.save(region);
     }
 }

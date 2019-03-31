@@ -1,4 +1,4 @@
-package org.uhafactory.test.tourism;
+package org.uhafactory.test.tourism.region;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
