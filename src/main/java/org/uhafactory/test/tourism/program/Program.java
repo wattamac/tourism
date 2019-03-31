@@ -13,6 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "PROGRAM")
 @NoArgsConstructor
@@ -37,7 +38,7 @@ public class Program implements SequenceId {
     @Column(name = "SERVICE_AREA")
     private String serviceArea;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(
             name = "REGION_PROGRAM",
             joinColumns = @JoinColumn(name = "PROGRAM_ID"),
@@ -68,4 +69,13 @@ public class Program implements SequenceId {
                 .append("regions", regions)
                 .toString();
     }
+
+//    public void setRegions(List<Region> regions) {
+//        if(this.regions == null) {
+//            this.regions = regions;
+//            return;
+//        }
+//        this.regions.clear();
+//        this.regions.addAll(regions);
+//    }
 }

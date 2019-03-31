@@ -7,10 +7,12 @@ import org.uhafactory.test.tourism.program.Program;
 import org.uhafactory.test.tourism.region.Region;
 
 @Mapper
-public interface RegionMapper {
-    RegionMapper MAPPER = Mappers.getMapper(RegionMapper.class);
+public interface DtoMapper {
+    DtoMapper MAPPER = Mappers.getMapper(DtoMapper.class);
     @Mapping(source = "code", target = "region")
-    RegionDto toRegionDto(Region region);
+    RegionDto toDto(Region region);
 
-    ProgramDto toProgramDto(Program program);
+    ProgramDto toDto(Program program);
+
+    Program toEntity(ProgramDto programDto);
 }

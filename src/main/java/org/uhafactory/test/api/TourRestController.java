@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.uhafactory.test.api.dto.RegionDto;
-import org.uhafactory.test.api.dto.RegionMapper;
+import org.uhafactory.test.api.dto.DtoMapper;
 import org.uhafactory.test.tourism.region.Region;
 import org.uhafactory.test.tourism.region.RegionService;
 
@@ -19,6 +19,6 @@ public class TourRestController {
     public ResponseEntity<RegionDto> getRegionPrograms(@PathVariable("code") String code) {
 
         Region region = regionService.getRegionByCode(code);
-        return ResponseEntity.ok(RegionMapper.MAPPER.toRegionDto(region));
+        return ResponseEntity.ok(DtoMapper.MAPPER.toDto(region));
     }
 }

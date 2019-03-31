@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProgramDto {
+    private String id;
     private String name;
     private String theme;
     private String serviceArea;

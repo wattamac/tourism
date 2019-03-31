@@ -1,10 +1,7 @@
 package org.uhafactory.test.tourism.region;
 
 import com.google.common.collect.Lists;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.util.StringUtils;
@@ -16,9 +13,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "code")
+@Entity
 @Table(name = "REGION")
 public class Region implements SequenceId {
     @GenericGenerator(name = "regionIdGenerator", strategy = "org.uhafactory.test.jpa.SequenceIdGenerator",

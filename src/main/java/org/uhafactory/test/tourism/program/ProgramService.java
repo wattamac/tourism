@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.uhafactory.test.tourism.region.RegionService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -32,5 +33,14 @@ public class ProgramService {
 
         log.info("create program : {}", program);
         programRepository.save(program);
+    }
+
+    public Optional<Program> getOne(String id) {
+        return programRepository.findById(id);
+    }
+
+    @Transactional
+    public void deleteById(String id) {
+        programRepository.deleteById(id);
     }
 }

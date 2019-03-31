@@ -7,7 +7,7 @@ import org.uhafactory.test.tourism.region.Region;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RegionMapperTest {
+class DtoMapperTest {
 
     @Test
     void testToRegionDto() {
@@ -21,26 +21,31 @@ class RegionMapperTest {
                         .build())
         );
 
-        RegionDto dto = RegionMapper.MAPPER.toRegionDto(region);
+        RegionDto dto = DtoMapper.MAPPER.toDto(region);
         assertThat(dto.getRegion()).isEqualTo("code");
         assertThat(dto.getPrograms()).hasSize(1);
         assertThat(dto.getPrograms().get(0).getName()).isEqualTo("강원도");
     }
 
     @Test
-    void testProgram() {
+    void testToProgramDto() {
         Program program = Program.builder().name("강원도").theme("theme")
                 .serviceArea("serviceArea")
                 .description("description")
                 .detailDescription("Detail")
                 .build();
 
-        ProgramDto dto = RegionMapper.MAPPER.toProgramDto(program);
+        ProgramDto dto = DtoMapper.MAPPER.toDto(program);
         assertThat(dto.getName()).isEqualTo(program.getName());
         assertThat(dto.getTheme()).isEqualTo(program.getTheme());
         assertThat(dto.getDescription()).isEqualTo(program.getDescription());
         assertThat(dto.getDetailDescription()).isEqualTo(program.getDetailDescription());
     }
+
+//    @Test
+//    void testToProgramEntity() {
+//        Region region = Region
+//    }
 
 
 }
