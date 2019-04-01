@@ -16,7 +16,7 @@ plugins {
 }
 
 
-group = 'org.uhafactory.tourism'
+group = 'org.uhafactory.tour'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
