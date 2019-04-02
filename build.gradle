@@ -44,10 +44,12 @@ dependencies {
 
     runtimeOnly('com.h2database:h2')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+
     testImplementation(
-            'org.junit.jupiter:junit-jupiter-api:5.4.0',
+            'org.junit.jupiter:junit-jupiter-api:5.3.2',
             'org.mockito:mockito-junit-jupiter:2.23.4'
     )
+
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
 }
 
@@ -58,7 +60,7 @@ querydsl {
     querydslSourcesDir = querydslSrcDir
 }
 
-compileQuerydsl{
+compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 
