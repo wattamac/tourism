@@ -30,12 +30,17 @@ class RegionNameUtilTest {
                 .containsAll(Lists.newArrayList("서울", "인천"));
         assertThat(RegionNameUtil.extractName("도초도"))
                 .containsAll(Lists.newArrayList("도초"));
+
+        assertThat(RegionNameUtil.extractName("경상북도 경주"))
+                .containsAll(Lists.newArrayList("경북", "경주"));
     }
 
     @Test
-    void testRemotePostfix() {
+    void testRemovePostfix() {
         assertThat(RegionNameUtil.removePostfix("강원도")).isEqualTo("강원");
         assertThat(RegionNameUtil.removePostfix("평창군")).isEqualTo("평창");
         assertThat(RegionNameUtil.removePostfix(" ")).isEmpty();
+        assertThat(RegionNameUtil.removePostfix("서울특별시")).isEqualTo("서울");
+        assertThat(RegionNameUtil.removePostfix("경상남도")).isEqualTo("경남");
     }
 }

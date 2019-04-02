@@ -3,7 +3,6 @@ package org.uhafactory.tour.configuration;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.uhafactory.tour.api.DataFile;
@@ -44,11 +43,7 @@ public class DataInitializer {
     private List<Region> regions() {
         List<Region> regions = Lists.newArrayList();
         regions.addAll(create("서울특별시", "경기도", "강원도"));
-        regions.addAll(create(Pair.of("경상남도", Lists.newArrayList("경상남도", "경남"))));
-        regions.addAll(create(Pair.of("경상북도", Lists.newArrayList("경상남도", "경북"))));
-        regions.addAll(create(Pair.of("충청북도", Lists.newArrayList("충청북도", "충북"))));
-        regions.addAll(create(Pair.of("전라북도", Lists.newArrayList("전라북도", "전북"))));
-        regions.addAll(create(Pair.of("전라남도", Lists.newArrayList("전라남도", "전남"))));
+        regions.addAll(create("경상남도", "경상북도", "충청북도", "전라북도", "전라남도"));
         regions.addAll(create("강원도 평창군", "강원도 속초시", "강원도 고성군", "강원도 원주시"));
         regions.addAll(create("경기도 의정부시", "경기도 양주시"));
         regions.addAll(create("경상남도 남해군", "경상남도 거제시", "경상남도 산청군", "경상남도 하동군", "경상남도 통영시"));
@@ -63,12 +58,6 @@ public class DataInitializer {
         regions.addAll(create("충청북도 제천시"));
         return regions;
 
-    }
-
-    private List<Region> create(Pair<String, List<String>> ... names) {
-        return Arrays.stream(names)
-                .map(n -> Region.create(n.getFirst(), n.getSecond()))
-                .collect(Collectors.toList());
     }
 
     private List<Region> create(String ... names) {
@@ -88,7 +77,7 @@ public class DataInitializer {
         String split[] = name.split(" ");
 
         if(split.length == 1) {
-            return Lists.newArrayList(split[0], name);
+            return Lists.newArrayList(name, removePostfix(name));
         }
 
         List<String> result = Lists.newArrayList();

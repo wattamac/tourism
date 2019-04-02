@@ -4,12 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.uhafactory.tour.dto.DtoMapper;
 import org.uhafactory.tour.dto.ProgramDto;
 import org.uhafactory.tour.program.Program;
 import org.uhafactory.tour.program.ProgramService;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -26,16 +28,18 @@ public class ProgramRestController {
     private ProgramService programService;
 
     @PostMapping("/import")
-    public ResponseEntity<Void> create(DataFile dataFile) throws IOException {
+    public ResponseEntity<Void> create(@RequestBody DataFile dataFile) throws IOException {
         List<Program> programs = programCsvReader.read(dataFile);
 
         programService.create(programs);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping
-    @PutMapping
-    public ResponseEntity<String> create(ProgramDto request) {
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
+    public ResponseEntity<String> create(@Valid @RequestBody ProgramDto request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         Program program = DtoMapper.MAPPER.toEntity(request);
 
         programService.save(program);

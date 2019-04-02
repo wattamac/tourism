@@ -1,14 +1,8 @@
 package org.uhafactory.tour.api;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.uhafactory.tour.dto.RegionAndCountResult;
 import org.uhafactory.tour.dto.Request;
 import org.uhafactory.tour.dto.Result;
@@ -16,31 +10,26 @@ import org.uhafactory.tour.dto.SimpleRegionDto;
 import org.uhafactory.tour.program.recommend.RecommendationRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
-@Transactional
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-public class TourRestControllerIntegrationTest {
-    @Autowired
-    private TourRestController controller;
-
+public class TourRestControllerIntegrationTest extends IntegrationTest {
     @Test
     void testGetRegionAndCount() {
         Request.KeywordDto keywordDto = new Request.KeywordDto("세계문화유산");
-        ResponseEntity<RegionAndCountResult> result = controller.getRegionAndCount(new Request.KeywordDto("세계문화유산"));
+
+        ResponseEntity<RegionAndCountResult> result = testRestTemplate.postForEntity(
+                createURL("/tour/regions/search/regions_count"), new Request.KeywordDto("세계문화유산"), RegionAndCountResult.class);
 
         RegionAndCountResult keywordResult = result.getBody();
         assertThat(keywordResult.getKeyword()).isEqualTo(keywordDto.getKeyword());
-        assertThat(keywordResult.getPrograms()).hasSize(1);
+        assertThat(keywordResult.getPrograms()).hasSize(2);
         assertThat(keywordResult.getPrograms().get(0).getCount()).isEqualTo(2);
-        assertThat(keywordResult.getPrograms().get(0).getName()).isEqualTo("경상북도 경주시");
+        assertThat(keywordResult.getPrograms().get(0).getName()).isIn("경상북도", "경상북도 경주시");
     }
 
     @Test
     void testGetProgramNameAndTheme() {
-        ResponseEntity<SimpleRegionDto> result = controller.getProgramNameAndTheme(new Request.RegionNameDto("평창군"));
+        ResponseEntity<SimpleRegionDto> result = testRestTemplate.postForEntity(
+                createURL("/tour/regions/search/program_themes"), new Request.RegionNameDto("평창군"), SimpleRegionDto.class);
         SimpleRegionDto searchResult = result.getBody();
 
         assertThat(searchResult.getRegion()).isNotBlank();
@@ -53,14 +42,11 @@ public class TourRestControllerIntegrationTest {
 
     @Test
     void testGetKeywordCount() {
-        ResponseEntity<Result.KeywordAndCountDto> result = controller.getKeywordCount(new Request.KeywordDto("체험"));
+        ResponseEntity<Result.KeywordAndCountDto> result = testRestTemplate.postForEntity(
+                createURL("/tour/regions/search/keyword_count"), new Request.KeywordDto("체험"), Result.KeywordAndCountDto.class);
         Result.KeywordAndCountDto searchResult = result.getBody();
         assertThat(searchResult.getKeyword()).isEqualTo("체험");
         assertThat(searchResult.getCount()).isEqualTo(99);
-
-        result = controller.getKeywordCount(new Request.KeywordDto("입체적"));
-        searchResult = result.getBody();
-        assertThat(searchResult.getCount()).isEqualTo(1);
     }
 
     @Test
@@ -69,12 +55,13 @@ public class TourRestControllerIntegrationTest {
         request.setRegion("남해군");
         request.setKeyword("생태체험");
 
-        BindingResult bindingResult = mock(BindingResult.class);
-        given(bindingResult.hasErrors()).willReturn(false);
+        ResponseEntity<Result.ProgramIdDto> result = testRestTemplate.postForEntity(
+                createURL("/tour/programs/recommend"), request, Result.ProgramIdDto.class);
 
-        ResponseEntity<Result.ProgramIdDto> result = controller.getRecommendProgram(request, bindingResult);
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         Result.ProgramIdDto programIdDto = result.getBody();
         assertThat(programIdDto.getProgram()).isNotBlank();
     }
+
+
 }
