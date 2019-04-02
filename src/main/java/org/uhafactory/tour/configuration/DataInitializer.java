@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.uhafactory.tour.util.RegionNameUtil.removePostfix;
+
 
 @Profile("dev")
 @Transactional
@@ -41,8 +43,12 @@ public class DataInitializer {
 
     private List<Region> regions() {
         List<Region> regions = Lists.newArrayList();
-        regions.addAll(create1(Pair.of("서울특별시", "서울"), Pair.of("경기도", "경기"), Pair.of("강원도", "강원"), Pair.of("경상남도", "경남"),
-                Pair.of("경상북도", "경북"), Pair.of("충청북도", "충북"), Pair.of("전라북도", "전북"), Pair.of("전라남도", "전남"), Pair.of("대전광역시", "대전")));
+        regions.addAll(create("서울특별시", "경기도", "강원도"));
+        regions.addAll(create(Pair.of("경상남도", Lists.newArrayList("경상남도", "경남"))));
+        regions.addAll(create(Pair.of("경상북도", Lists.newArrayList("경상남도", "경북"))));
+        regions.addAll(create(Pair.of("충청북도", Lists.newArrayList("충청북도", "충북"))));
+        regions.addAll(create(Pair.of("전라북도", Lists.newArrayList("전라북도", "전북"))));
+        regions.addAll(create(Pair.of("전라남도", Lists.newArrayList("전라남도", "전남"))));
         regions.addAll(create("강원도 평창군", "강원도 속초시", "강원도 고성군", "강원도 원주시"));
         regions.addAll(create("경기도 의정부시", "경기도 양주시"));
         regions.addAll(create("경상남도 남해군", "경상남도 거제시", "경상남도 산청군", "경상남도 하동군", "경상남도 통영시"));
@@ -59,15 +65,15 @@ public class DataInitializer {
 
     }
 
-    private List<Region> create1(Pair<String, String>... names) {
+    private List<Region> create(Pair<String, List<String>> ... names) {
         return Arrays.stream(names)
                 .map(n -> Region.create(n.getFirst(), n.getSecond()))
                 .collect(Collectors.toList());
     }
 
-    private List<Region> create(String... names) {
+    private List<Region> create(String ... names) {
         return Arrays.stream(names)
-                .map(Region::create)
+                .map(n -> Region.create(n, extractKeyword(n)))
                 .collect(Collectors.toList());
     }
 
@@ -76,5 +82,25 @@ public class DataInitializer {
         List<Program> programs = programCsvReader.read(dataFile);
 
         programService.create(programs);
+    }
+
+    static List<String> extractKeyword(String name) {
+        String split[] = name.split(" ");
+
+        if(split.length == 1) {
+            return Lists.newArrayList(split[0], name);
+        }
+
+        List<String> result = Lists.newArrayList();
+        List<String> level1 = Lists.newArrayList(split[0], removePostfix(split[0]));
+        List<String> level2 = Lists.newArrayList(split[1], removePostfix(split[1]));
+
+        for(String first : level1) {
+            for(String second : level2) {
+                result.add(first + " " + second);
+            }
+        }
+        result.addAll(level2);
+        return result;
     }
 }

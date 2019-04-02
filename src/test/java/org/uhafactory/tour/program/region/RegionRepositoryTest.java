@@ -22,10 +22,10 @@ class RegionRepositoryTest extends RepositoryTestBase {
 
     @Test
     void testFindByNames() {
-        persist(Region.create("강원도 속초시"));
-        persist(Region.create("강원도 평창군"));
+        persist(Region.create("강원도 속초시", Lists.newArrayList("강원 속초", "속초")));
+        persist(Region.create("강원도 평창군", Lists.newArrayList("평창")));
         persist(Region.create("강원도 양평군"));
-        persist(Region.create("강원도"));
+        persist(Region.create("강원도", Lists.newArrayList("강원도", "강원")));
 
         List<Region> result = repository.findByNames(Lists.newArrayList("강원", "평창", "속초"));
 
@@ -37,7 +37,7 @@ class RegionRepositoryTest extends RepositoryTestBase {
     void testFindByName() {
         persist(Region.create("강원도 속초시"));
         persist(Region.create("강원도 양평군"));
-        Region region1 = persist(Region.create("강원도 평창군"));
+        Region region1 = persist(Region.create("강원도 평창군", Lists.newArrayList("평창군", "강원도 평창군")));
         Region region2 = persist(Region.create("강원도"));
 
         persist(Program.builder().name("1").theme("theme1").regions(Lists.newArrayList(region1, region2)).build());
@@ -60,7 +60,7 @@ class RegionRepositoryTest extends RepositoryTestBase {
         persist(Region.create("강원도 평창군"));
 
         Region result = repository.findByCodeWithPrograms(region.getCode());
-        assertThat(result.getName().getName()).isEqualTo("속초시");
+        assertThat(result.getName()).isEqualTo("강원도 속초시");
     }
 
     @Test
@@ -85,11 +85,11 @@ class RegionRepositoryTest extends RepositoryTestBase {
         List<RegionAndCountResult.RegionAndProgramCount> regions = repository.findByProgramInContainsDescriptionKeyword(keyword);
         assertThat(regions).hasSize(3);
         assertThat(regions.get(0).getCount()).isEqualTo(3);
-        assertThat(regions.get(0).getName()).isEqualTo(region3.getName().getWholeName());
+        assertThat(regions.get(0).getName()).isEqualTo(region3.getName());
         assertThat(regions.get(1).getCount()).isEqualTo(2);
-        assertThat(regions.get(1).getName()).isEqualTo(region1.getName().getWholeName());
+        assertThat(regions.get(1).getName()).isEqualTo(region1.getName());
         assertThat(regions.get(2).getCount()).isEqualTo(1);
-        assertThat(regions.get(2).getName()).isEqualTo(region2.getName().getWholeName());
+        assertThat(regions.get(2).getName()).isEqualTo(region2.getName());
     }
 
     private Region persist(Region region) {

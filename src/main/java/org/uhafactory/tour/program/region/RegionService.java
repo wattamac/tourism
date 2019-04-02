@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.uhafactory.tour.dto.RegionAndCountResult;
-import org.uhafactory.tour.util.NameUtil;
+import org.uhafactory.tour.util.RegionNameUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +18,7 @@ public class RegionService {
     private RegionRepository regionRepository;
 
     public List<Region> getRegions(String wholeName) {
-        List<String> names = NameUtil.extractName(wholeName);
+        List<String> names = RegionNameUtil.extractName(wholeName);
         if (CollectionUtils.isEmpty(names)) {
             return Collections.emptyList();
         }

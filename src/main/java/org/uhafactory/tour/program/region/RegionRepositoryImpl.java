@@ -17,14 +17,14 @@ public class RegionRepositoryImpl extends QuerydslRepositorySupport implements R
     public Region findByNameWithPrograms(String name) {
         return from(QRegion.region)
                 .leftJoin(QRegion.region.programs, QProgram.program).fetchJoin()
-                .where(QRegion.region.name.name.eq(name))
+                .where(QRegion.region.keyword.contains(name))
                 .fetchOne();
     }
 
     @Override
     public List<Region> findByNames(Collection<String> names) {
         return from(QRegion.region)
-                .where(QRegion.region.name.shortName.in(names))
+                .where(QRegion.region.keyword.any().in(names))
                 .fetch();
     }
 

@@ -8,16 +8,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class NameUtil {
+public class RegionNameUtil {
     private static final String NAME_PATTERN =
             "\\s|,|~|(특별시)($|\\s|,)|(광역시)($|\\s|,)|[도구군동시]($|\\s|,)|(국립공원)($|\\s|,)";
 
-    private NameUtil() {
+    private RegionNameUtil() {
     }
 
     public static List<String> extractName(String wholeName) {
         return extract(wholeName).collect(Collectors.toList());
     }
+
+
 
     private static Stream<String> extract(String wholeName) {
         if(StringUtils.isBlank(wholeName)) {

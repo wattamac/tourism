@@ -8,6 +8,8 @@ import org.uhafactory.tour.RepositoryTestBase;
 import org.uhafactory.tour.program.region.Region;
 import org.uhafactory.tour.program.region.RegionRepository;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProgramRepositoryTest extends RepositoryTestBase {
@@ -19,9 +21,9 @@ class ProgramRepositoryTest extends RepositoryTestBase {
 
     @Test
     void testMapping() {
-        Region region1 = persist(Region.create("강원도"));
-        Region region2 = persist(Region.create("원주시"));
-        Region region3 = persist(Region.create("통영시"));
+        Region region1 = persist(Region.create("강원도", Collections.emptyList()));
+        Region region2 = persist(Region.create("원주시", Collections.emptyList()));
+        Region region3 = persist(Region.create("통영시", Collections.emptyList()));
 
         Program program = new Program();
         program.setName("자연과 문화를 함께 즐기는 설악산 기행");
@@ -37,7 +39,7 @@ class ProgramRepositoryTest extends RepositoryTestBase {
 
         assertThat(result.getName()).isEqualTo(program.getName());
         Assertions.assertThat(result.getRegions()).hasSize(2);
-        Assertions.assertThat(result.getRegions().get(0).getName().getName()).isEqualTo("강원도");
+        Assertions.assertThat(result.getRegions().get(0).getName()).isEqualTo("강원도");
 
         Region region = regionRepository.getOne(region1.getCode());
         Assertions.assertThat(region.getPrograms()).hasSize(1);

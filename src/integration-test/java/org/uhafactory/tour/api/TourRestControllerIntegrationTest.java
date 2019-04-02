@@ -60,7 +60,7 @@ public class TourRestControllerIntegrationTest {
 
         result = controller.getKeywordCount(new Request.KeywordDto("입체적"));
         searchResult = result.getBody();
-        assertThat(searchResult.getCount()).isEqualTo("1");
+        assertThat(searchResult.getCount()).isEqualTo(1);
     }
 
     @Test

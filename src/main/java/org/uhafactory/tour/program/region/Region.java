@@ -5,11 +5,11 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.util.StringUtils;
-import org.uhafactory.tour.Name;
 import org.uhafactory.tour.jpa.SequenceId;
 import org.uhafactory.tour.program.Program;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -29,10 +29,8 @@ public class Region implements SequenceId {
     @Column(name = "CODE")
     private String code;
 
-
-
     @Column(name = "NAME")
-    private Name name;
+    private String name;
 
     @Override
     public String createId(Number sequence) {
@@ -43,31 +41,22 @@ public class Region implements SequenceId {
         return code;
     }
 
-//    @ElementCollection
-//    @CollectionTable(name = "REG_KEYWORD")
-//    private List<String> keyword = Lists.newArrayList();
+    @ElementCollection
+    @CollectionTable(name = "REG_KEYWORD")
+    private List<String> keyword = Lists.newArrayList();
 
     @ManyToMany(mappedBy = "regions")
     private List<Program> programs = Lists.newArrayList();
 
-    public static Region create(String wholeName) {
+    public static Region create(String name, List<String> keyword) {
         Region region = new Region();
-        region.setName(Name.create(wholeName));
+        region.setName(name);
+        region.setKeyword(keyword);
         return region;
     }
 
-    public static Region create(String wholeName, String shortName) {
-        Region region = create(wholeName);
-        region.getName().setShortName(shortName);
-        return region;
-    }
-
-    public void setName(Name name) {
-        this.name = name;
-    }
-
-    public void setName(String name) {
-        this.name = Name.create(name);
+    public static Region create(String name) {
+        return Region.create(name, Collections.emptyList());
     }
 
     @Override
