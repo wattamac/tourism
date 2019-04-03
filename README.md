@@ -15,8 +15,8 @@ Use __Gradle__ and __Java 8 or later__ to build tourism
 ```
 # Build project
 $ ./gradlew build
+
 # Run project
-$ java 
 $ java -jar build/libs/tour-0.0.1-SNAPSHOT.jar
 ```
 
@@ -50,3 +50,8 @@ $ java -jar build/libs/tour-0.0.1-SNAPSHOT.jar
 
 6. 지역명과 키워드를 입력받아 생태관광 프로그램 추천
 > TourRestController.getRecommendProgram
+
+#### sample
+```
+src/integraiton-test/java/org/uhafactory/tour/api/TourRestControllerIntegrationTest
+```
