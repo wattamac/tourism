@@ -1,6 +1,8 @@
 package org.uhafactory.tour.api;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.uhafactory.tour.dto.RegionAndCountResult;
@@ -50,18 +52,25 @@ public class TourRestControllerIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    void testRecommendProgram() {
+    void testRecommendProgram_withJwt() {
+        signUp();
+        String token = getToken();
         RecommendationRequest request = new RecommendationRequest();
         request.setRegion("남해군");
         request.setKeyword("생태체험");
 
         ResponseEntity<Result.ProgramIdDto> result = testRestTemplate.postForEntity(
-                createURL("/tour/programs/recommend"), request, Result.ProgramIdDto.class);
+                createURL("/tour/recommend"), getHttpEntity(request, token), Result.ProgramIdDto.class);
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         Result.ProgramIdDto programIdDto = result.getBody();
         assertThat(programIdDto.getProgram()).isNotBlank();
     }
 
+    public HttpEntity getHttpEntity(Object request, String token) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        return new HttpEntity(request, headers);
+    }
 
 }

@@ -60,7 +60,7 @@ public class TourRestController {
         return ResponseEntity.ok(new Result.KeywordAndCountDto(request.getKeyword(), count));
     }
 
-    @PostMapping("/programs/recommend")
+    @PostMapping("/recommend")
     public ResponseEntity<Result.ProgramIdDto> getRecommendProgram(@Valid @RequestBody RecommendationRequest request, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

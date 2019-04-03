@@ -4,6 +4,7 @@
 ## Development Stack
 - Spring Boot 2.1.2
 - Spring Data JPA + QueryDsl
+- jjwt (JWT)
 - Lombok 
 - Mapstruct
 - H2 Database

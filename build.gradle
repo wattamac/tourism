@@ -31,8 +31,11 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-web')
 
+    //jwt
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.5.3'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation 'org.apache.commons:commons-lang3:3.0'
 
     //mapstruct
