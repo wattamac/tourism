@@ -1,4 +1,4 @@
-package org.uhafactory.tour;
+package org.uhafactory.tour.program;
 
 import org.apache.commons.lang3.StringUtils;
 

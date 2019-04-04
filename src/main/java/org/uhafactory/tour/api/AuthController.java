@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.uhafactory.tour.security.JwtTokenProvider;
-import org.uhafactory.tour.security.User;
-import org.uhafactory.tour.security.UserRepository;
-import org.uhafactory.tour.security.ApiResponse;
-import org.uhafactory.tour.security.JwtAuthenticationResponse;
-import org.uhafactory.tour.security.LoginRequest;
-import org.uhafactory.tour.security.SignUpRequest;
+import org.uhafactory.tour.api.security.JwtTokenProvider;
+import org.uhafactory.tour.user.User;
+import org.uhafactory.tour.user.UserRepository;
+import org.uhafactory.tour.api.dto.ApiResponse;
+import org.uhafactory.tour.api.dto.JwtAuthenticationResponse;
+import org.uhafactory.tour.api.dto.LoginRequest;
+import org.uhafactory.tour.api.dto.SignUpRequest;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -57,7 +57,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<ApiResponse> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.findById(signUpRequest.getLoginId()).isPresent()) {
             return new ResponseEntity(ApiResponse.fail("Login is already taken!"),
                     HttpStatus.BAD_REQUEST);

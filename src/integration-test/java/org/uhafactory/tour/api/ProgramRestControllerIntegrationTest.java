@@ -6,7 +6,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.uhafactory.tour.dto.ProgramDto;
+import org.uhafactory.tour.api.dto.DataFile;
+import org.uhafactory.tour.api.dto.ProgramDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

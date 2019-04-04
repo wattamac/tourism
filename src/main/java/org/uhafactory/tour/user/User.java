@@ -1,4 +1,4 @@
-package org.uhafactory.tour.security;
+package org.uhafactory.tour.user;
 
 import lombok.*;
 

@@ -41,7 +41,7 @@ class RecommendationServiceTest {
         Program program3 = Program.builder().id("3").build();
         Program program4 = Program.builder().id("4").build();
         given(regionService.getRegionByName("region")).willReturn(
-                aRegion(program1, program2, program3)
+                Optional.of(aRegion(program1, program2, program3))
         );
 
         matchedRecommend(request, program1, 3);

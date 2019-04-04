@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.uhafactory.tour.dto.DtoMapper;
-import org.uhafactory.tour.dto.ProgramDto;
+import org.uhafactory.tour.api.dto.DataFile;
+import org.uhafactory.tour.api.dto.DtoMapper;
+import org.uhafactory.tour.api.dto.ProgramDto;
 import org.uhafactory.tour.program.Program;
 import org.uhafactory.tour.program.ProgramService;
 
@@ -50,7 +51,7 @@ public class ProgramRestController {
     @GetMapping("/{id}")
     public ResponseEntity<ProgramDto> get(@PathVariable("id") String id) {
         try {
-            Optional<Program> program = programService.getOne(id);
+            Optional<Program> program = programService.getProgramById(id);
 
             return program.map(r -> ResponseEntity.ok(DtoMapper.MAPPER.toDto(program.get())))
                     .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());

@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.uhafactory.tour.dto.RegionAndCountResult;
-import org.uhafactory.tour.util.RegionNameUtil;
+import org.uhafactory.tour.api.dto.RegionAndCountResult;
+import org.uhafactory.tour.program.RegionNameUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,11 +26,11 @@ public class RegionService {
         return regionRepository.findByNames(names);
     }
 
-    public Region getRegionByCode(String code) {
+    public Optional<Region> getRegionByCode(String code) {
         return regionRepository.findByCodeWithPrograms(code);
     }
 
-    public Region getRegionByName(String name) {
+    public Optional<Region> getRegionByName(String name) {
         return regionRepository.findByNameWithPrograms(name);
     }
 

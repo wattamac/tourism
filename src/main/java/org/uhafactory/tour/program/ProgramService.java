@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.uhafactory.tour.Keyword;
 import org.uhafactory.tour.program.region.RegionService;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class ProgramService {
         programRepository.save(program);
     }
 
-    public Optional<Program> getOne(String id) {
+    public Optional<Program> getProgramById(String id) {
         return programRepository.findById(id);
     }
 

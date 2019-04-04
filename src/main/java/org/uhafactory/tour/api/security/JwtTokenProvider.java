@@ -1,4 +1,4 @@
-package org.uhafactory.tour.security;
+package org.uhafactory.tour.api.security;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;

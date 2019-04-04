@@ -1,14 +1,15 @@
-package org.uhafactory.tour.dto;
+package org.uhafactory.tour.api.dto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 import org.uhafactory.tour.program.Program;
 import org.uhafactory.tour.program.region.Region;
 
+import static org.mapstruct.factory.Mappers.getMapper;
+
 @Mapper
 public interface DtoMapper {
-    DtoMapper MAPPER = Mappers.getMapper(DtoMapper.class);
+    DtoMapper MAPPER = getMapper(DtoMapper.class);
     @Mapping(source = "code", target = "region")
     RegionDto toDto(Region region);
 

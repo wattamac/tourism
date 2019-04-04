@@ -14,9 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.uhafactory.tour.security.CustomUserDetailsService;
-import org.uhafactory.tour.security.JwtAuthenticationEntryPoint;
-import org.uhafactory.tour.security.JwtAuthenticationFilter;
+import org.uhafactory.tour.api.security.CustomUserDetailsService;
+import org.uhafactory.tour.api.security.JwtAuthenticationEntryPoint;
+import org.uhafactory.tour.api.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity

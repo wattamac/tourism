@@ -1,28 +1,27 @@
-package org.uhafactory.tour.dto;
+package org.uhafactory.tour.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class Result {
-    private Result() {
+public class Request {
+    private Request() {
     }
 
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class KeywordAndCountDto {
+    public static class KeywordDto {
         private String keyword;
-        private int count;
     }
 
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class ProgramIdDto {
-        private String program;
+    public static class RegionNameDto {
+        private String region;
     }
 }

@@ -2,11 +2,12 @@ package org.uhafactory.tour.program.region;
 
 import com.querydsl.core.types.Projections;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.uhafactory.tour.dto.RegionAndCountResult;
+import org.uhafactory.tour.api.dto.RegionAndCountResult;
 import org.uhafactory.tour.program.QProgram;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class RegionRepositoryImpl extends QuerydslRepositorySupport implements RegionRepositoryCustom {
     public RegionRepositoryImpl() {
@@ -14,11 +15,12 @@ public class RegionRepositoryImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Region findByNameWithPrograms(String name) {
-        return from(QRegion.region)
+    public Optional<Region> findByNameWithPrograms(String name) {
+        return Optional.ofNullable(from(QRegion.region)
                 .leftJoin(QRegion.region.programs, QProgram.program).fetchJoin()
                 .where(QRegion.region.keyword.contains(name))
-                .fetchOne();
+                .fetchOne()
+        );
     }
 
     @Override
@@ -29,11 +31,13 @@ public class RegionRepositoryImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Region findByCodeWithPrograms(String code) {
-        return from(QRegion.region)
-                .leftJoin(QRegion.region.programs, QProgram.program).fetchJoin()
-                .where(QRegion.region.code.eq(code))
-                .fetchOne();
+    public Optional<Region> findByCodeWithPrograms(String code) {
+        return Optional.ofNullable(
+                from(QRegion.region)
+                        .leftJoin(QRegion.region.programs, QProgram.program).fetchJoin()
+                        .where(QRegion.region.code.eq(code))
+                        .fetchOne()
+        );
     }
 
     @Override

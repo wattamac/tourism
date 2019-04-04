@@ -4,11 +4,12 @@ import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uhafactory.tour.RepositoryTestBase;
-import org.uhafactory.tour.dto.RegionAndCountResult;
+import org.uhafactory.tour.api.dto.RegionAndCountResult;
 import org.uhafactory.tour.program.Program;
 import org.uhafactory.tour.program.ProgramRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,8 +46,8 @@ class RegionRepositoryTest extends RepositoryTestBase {
 
         flushAndClear();
 
-        Region result = repository.findByNameWithPrograms("평창군");
-
+        Optional<Region> optionalRegion = repository.findByNameWithPrograms("평창군");
+        Region result = optionalRegion.get();
         assertThat(result.getCode()).isEqualTo(region1.getCode());
         assertThat(result.getPrograms()).hasSize(2);
         assertThat(result.getPrograms().get(0).getName()).isEqualTo("1");
@@ -59,8 +60,8 @@ class RegionRepositoryTest extends RepositoryTestBase {
         persist(region);
         persist(Region.create("강원도 평창군"));
 
-        Region result = repository.findByCodeWithPrograms(region.getCode());
-        assertThat(result.getName()).isEqualTo("강원도 속초시");
+        Optional<Region> result = repository.findByCodeWithPrograms(region.getCode());
+        assertThat(result.get().getName()).isEqualTo("강원도 속초시");
     }
 
     @Test

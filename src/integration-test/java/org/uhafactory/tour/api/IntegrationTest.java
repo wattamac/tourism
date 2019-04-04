@@ -7,10 +7,10 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.uhafactory.tour.TourApplication;
-import org.uhafactory.tour.security.ApiResponse;
-import org.uhafactory.tour.security.JwtAuthenticationResponse;
-import org.uhafactory.tour.security.LoginRequest;
-import org.uhafactory.tour.security.SignUpRequest;
+import org.uhafactory.tour.api.dto.ApiResponse;
+import org.uhafactory.tour.api.dto.JwtAuthenticationResponse;
+import org.uhafactory.tour.api.dto.LoginRequest;
+import org.uhafactory.tour.api.dto.SignUpRequest;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = TourApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

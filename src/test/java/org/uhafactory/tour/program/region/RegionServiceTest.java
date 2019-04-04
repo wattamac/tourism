@@ -6,12 +6,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.uhafactory.tour.dto.RegionAndCountResult;
-import org.uhafactory.tour.program.region.Region;
-import org.uhafactory.tour.program.region.RegionRepository;
-import org.uhafactory.tour.program.region.RegionService;
+import org.uhafactory.tour.api.dto.RegionAndCountResult;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,20 +48,20 @@ class RegionServiceTest {
     @Test
     void testGetRegionByCode() {
         String code = "!231";
-        Region expected = Region.create("AA");
+        Optional<Region> expected = Optional.of(Region.create("AA"));
         given(regionRepository.findByCodeWithPrograms(code)).willReturn(expected);
 
-        Region region = regionService.getRegionByCode(code);
+        Optional<Region> region = regionService.getRegionByCode(code);
         assertThat(region).isEqualTo(expected);
     }
 
     @Test
     void testGetRegionByName() {
         String name = "!231";
-        Region expected = Region.create("AA");
+        Optional<Region> expected = Optional.of(Region.create("AA"));
         given(regionRepository.findByNameWithPrograms(name)).willReturn(expected);
 
-        Region region = regionService.getRegionByName(name);
+        Optional<Region> region = regionService.getRegionByName(name);
         assertThat(region).isEqualTo(expected);
     }
 

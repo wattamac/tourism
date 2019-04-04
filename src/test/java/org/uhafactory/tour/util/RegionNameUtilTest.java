@@ -2,6 +2,7 @@ package org.uhafactory.tour.util;
 
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
+import org.uhafactory.tour.program.RegionNameUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

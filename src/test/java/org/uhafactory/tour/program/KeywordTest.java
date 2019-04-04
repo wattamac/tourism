@@ -1,11 +1,11 @@
-package org.uhafactory.tour;
+package org.uhafactory.tour.program;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class KeywordDtoTest {
+class KeywordTest {
 
     @Test
     void testCount() {

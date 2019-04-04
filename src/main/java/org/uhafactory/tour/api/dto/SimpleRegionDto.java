@@ -1,4 +1,4 @@
-package org.uhafactory.tour.dto;
+package org.uhafactory.tour.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

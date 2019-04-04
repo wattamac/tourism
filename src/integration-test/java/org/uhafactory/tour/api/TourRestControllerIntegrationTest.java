@@ -5,10 +5,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.uhafactory.tour.dto.RegionAndCountResult;
-import org.uhafactory.tour.dto.Request;
-import org.uhafactory.tour.dto.Result;
-import org.uhafactory.tour.dto.SimpleRegionDto;
+import org.uhafactory.tour.api.dto.RegionAndCountResult;
+import org.uhafactory.tour.api.dto.Request;
+import org.uhafactory.tour.api.dto.Result;
+import org.uhafactory.tour.api.dto.SimpleRegionDto;
 import org.uhafactory.tour.program.recommend.RecommendationRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;

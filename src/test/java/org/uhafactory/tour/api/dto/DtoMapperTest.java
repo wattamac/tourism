@@ -1,4 +1,4 @@
-package org.uhafactory.tour.dto;
+package org.uhafactory.tour.api.dto;
 
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;

@@ -18,15 +18,14 @@ public class RecommendationService {
     private RecommendationCreator recommendationCreator;
 
     public Optional<Recommendation> getRecommend(RecommendationRequest request) {
-        Region region = regionService.getRegionByName(request.getRegion());
-        if(region == null) {
-            return Optional.empty();
-        }
-        return region.getPrograms().stream()
+        Optional<Region> region = regionService.getRegionByName(request.getRegion());
+        return region.map(r -> r.getPrograms().stream()
                 .map(p -> toRecommendation(request, p))
                 .filter(Recommendation::matched)
                 .sorted(Comparator.comparing(Recommendation::score).reversed())
-                .findFirst();
+                .findFirst())
+                .orElse(Optional.empty());
+
     }
 
     private Recommendation toRecommendation(RecommendationRequest request, Program program) {

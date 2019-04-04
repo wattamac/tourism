@@ -1,4 +1,4 @@
-package org.uhafactory.tour.util;
+package org.uhafactory.tour.program;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;

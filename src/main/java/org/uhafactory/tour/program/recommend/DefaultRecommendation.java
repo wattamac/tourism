@@ -1,6 +1,6 @@
 package org.uhafactory.tour.program.recommend;
 
-import org.uhafactory.tour.Keyword;
+import org.uhafactory.tour.program.Keyword;
 import org.uhafactory.tour.program.Program;
 
 public class DefaultRecommendation implements Recommendation {

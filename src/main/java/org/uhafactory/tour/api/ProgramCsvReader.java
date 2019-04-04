@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.uhafactory.tour.api.dto.DataFile;
 import org.uhafactory.tour.program.Program;
 
 import java.io.IOException;

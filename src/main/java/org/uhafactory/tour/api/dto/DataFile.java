@@ -1,4 +1,4 @@
-package org.uhafactory.tour.api;
+package org.uhafactory.tour.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

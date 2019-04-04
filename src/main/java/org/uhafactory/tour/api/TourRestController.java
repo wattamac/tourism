@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.uhafactory.tour.dto.*;
+import org.uhafactory.tour.api.dto.*;
 import org.uhafactory.tour.program.ProgramService;
 import org.uhafactory.tour.program.recommend.Recommendation;
 import org.uhafactory.tour.program.recommend.RecommendationRequest;
@@ -31,20 +31,17 @@ public class TourRestController {
     @GetMapping("/regions/{code}")
     public ResponseEntity<RegionDto> getRegionPrograms(@PathVariable("code") String code) {
 
-        Region region = regionService.getRegionByCode(code);
-        if(region == null) {
-            return notFound();
-        }
-        return ResponseEntity.ok(DtoMapper.MAPPER.toDto(region));
+        Optional<Region> region = regionService.getRegionByCode(code);
+        return region.map(r -> ResponseEntity.ok(DtoMapper.MAPPER.toDto(r)))
+                .orElse(notFound());
     }
 
     @PostMapping("/regions/search/program_themes")
     public ResponseEntity<SimpleRegionDto> getProgramNameAndTheme(@RequestBody Request.RegionNameDto request) {
-        Region region = regionService.getRegionByName(request.getRegion());
-        if(region == null) {
-            return notFound();
-        }
-        return ResponseEntity.ok(DtoMapper.MAPPER.toSimpleDto(region));
+        Optional<Region> region = regionService.getRegionByName(request.getRegion());
+        return region.map(r ->
+                ResponseEntity.ok(DtoMapper.MAPPER.toSimpleDto(r)))
+                .orElse(notFound());
     }
 
     @PostMapping("/regions/search/regions_count")
@@ -62,7 +59,7 @@ public class TourRestController {
 
     @PostMapping("/recommend")
     public ResponseEntity<Result.ProgramIdDto> getRecommendProgram(@Valid @RequestBody RecommendationRequest request, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 

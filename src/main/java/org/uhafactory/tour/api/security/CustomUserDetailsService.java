@@ -1,4 +1,4 @@
-package org.uhafactory.tour.security;
+package org.uhafactory.tour.api.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,7 +6,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.uhafactory.tour.user.User;
+import org.uhafactory.tour.user.UserRepository;
 
+@Transactional(readOnly = true)
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -14,12 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return loadUserByLoginId(username);
     }
 
-    @Transactional
     public UserDetails loadUserByLoginId(String loginId) {
         User user = userRepository.findById(loginId)
                 .orElseThrow(() ->
