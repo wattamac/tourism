@@ -11,7 +11,7 @@ import org.uhafactory.tour.user.User;
 
 import java.util.Collection;
 
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "loginId")
 @AllArgsConstructor
 @Getter
 public class UserPrincipal implements UserDetails {
